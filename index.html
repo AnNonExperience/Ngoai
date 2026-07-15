@@ -162,9 +162,11 @@
       <div class="btn-container">
         <button class="btn btn-yes" onclick="forgive()">Đồng ý</button>
         <button
+          id="btnNo"
           class="btn btn-no"
           onmouseover="dodgeButton(this)"
-          onclick="dodgeButton(this)"
+          ontouchstart="dodgeButton(this); event.preventDefault();"
+          onclick="return false;"
         >
           Không Đồng Ý!
         </button>
