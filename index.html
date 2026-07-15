@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gửi Ngoại thương yêu...</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #ffe5ec, #ffc2d1);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 40px 30px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        max-width: 450px;
+        width: 90%;
+        z-index: 10;
+        border: 2px solid #ff85a1;
+        animation: fadeIn 1.5s ease-in-out;
+      }
+
+      .pufferfish-icon {
+        font-size: 70px;
+        animation: float 3s ease-in-out infinite;
+        display: inline-block;
+        margin-bottom: 15px;
+      }
+
+      h1 {
+        color: #ff477e;
+        font-size: 26px;
+        margin-bottom: 20px;
+      }
+
+      p {
+        color: #4a4a4a;
+        line-height: 1.6;
+        font-size: 16px;
+        margin-bottom: 20px;
+      }
+
+      .quote {
+        font-style: italic;
+        font-weight: bold;
+        color: #ff477e;
+        background: #ffe5ec;
+        padding: 15px;
+        border-radius: 10px;
+        border-left: 5px solid #ff7096;
+        margin: 20px 0;
+        text-align: center;
+        line-height: 1.5;
+      }
+
+      .btn-container {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .btn {
+        padding: 12px 25px;
+        border: none;
+        border-radius: 25px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .btn-yes {
+        background-color: #ff477e;
+        color: white;
+        box-shadow: 0 4px 15px rgba(255, 71, 126, 0.4);
+      }
+
+      .btn-yes:hover {
+        background-color: #ff7096;
+        transform: scale(1.05);
+      }
+
+      .btn-no {
+        background-color: #bdc3c7;
+        color: white;
+        position: relative;
+      }
+
+      /* Hiệu ứng bong bóng/trái tim bay */
+      .heart {
+        position: absolute;
+        font-size: 20px;
+        color: #ff85a1;
+        pointer-events: none;
+        z-index: 1;
+        animation: fly Up 4s linear infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-15px) rotate(10deg);
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fly {
+        0% {
+          transform: translateY(100vh) scale(0);
+          opacity: 0;
+        }
+        50% {
+          opacity: 0.8;
+        }
+        100% {
+          transform: translateY(-10vh) scale(1.2);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="pufferfish-icon">🐡</div>
+      <h1>Ngoại ơiiii</h1>
+
+      <div class="quote">
+        "Cá nóc duy nhất là của ngoạiii nó chỉ vùng vẫy khi có ngoạii chăm thôi"
+      </div>
+
+      <p>Ngoạiiii phải nuôi nó lớn hơn nữa nha ❤️</p>
+
+      <div class="btn-container">
+        <button class="btn btn-yes" onclick="forgive()">Đồng ý</button>
+        <button
+          class="btn btn-no"
+          onmouseover="dodgeButton(this)"
+          onclick="dodgeButton(this)"
+        >
+          Không Đồng Ý!
+        </button>
+      </div>
+    </div>
+
+    <script>
+      // Tạo hiệu ứng bong bóng trái tim bay lên
+      function createHeart() {
+        const heartSymbol = Math.random() > 0.5 ? "❤️" : "🐡";
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerText = heartSymbol;
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+        heart.style.fontSize = Math.random() * 15 + 15 + "px";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 5000);
+      }
+
+      setInterval(createHeart, 400);
+
+      // Nút "Không tha!" sẽ né khi di chuột vào hoặc click
+      function dodgeButton(btn) {
+        const card = document.querySelector(".card");
+        const cardRect = card.getBoundingClientRect();
+
+        // Tính toán giới hạn để nút không bay ra ngoài màn hình quá xa
+        const maxX = window.innerWidth - btn.clientWidth - 20;
+        const maxY = window.innerHeight - btn.clientHeight - 20;
+
+        let randomX = Math.random() * maxX;
+        let randomY = Math.random() * maxY;
+
+        // Tránh đè lên thẻ card chính giữa
+        while (
+          randomX > cardRect.left - 50 &&
+          randomX < cardRect.right + 50 &&
+          randomY > cardRect.top - 50 &&
+          randomY < cardRect.bottom + 50
+        ) {
+          randomX = Math.random() * maxX;
+          randomY = Math.random() * maxY;
+        }
+
+        btn.style.position = "fixed";
+        btn.style.left = randomX + "px";
+        btn.style.top = randomY + "px";
+      }
+
+      // Khi bấm "Tha lỗi cho em"
+      function forgive() {
+        // Đổi nội dung thẻ card
+        document.querySelector(".card").innerHTML = `
+                <div class="pufferfish-icon" style="animation: float 1.5s ease-in-out infinite;">🥰</div>
+                <h1 style="color: #ff477e;">Yêu Ngoại nhất trên đời!</h1>
+                <p>Cá Nóc hứa sẽ ngoan, không làm Ngoại buồn nữa đâu. Cảm ơn Ngoại đã luôn thương và chăm sóc cho chú Cá Nóc bướng bỉnh này!</p>
+                <p style="font-size: 24px;">🐡 ❤️ 👵 / 👴</p>
+            `;
+
+        // Tăng tốc độ rơi tim ăn mừng
+        setInterval(createHeart, 100);
+      }
+    </script>
+  </body>
+</html>
